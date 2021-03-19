@@ -38,7 +38,7 @@ class Cloner(object):
         new_url = yarl.URL(url)
         if not new_url.scheme:
             new_url = yarl.URL('http://' + url)
-        err_url = new_url.with_path('/status_404').with_query(None).with_fragment(None)
+        err_url = new_url.with_path('/status_404').with_query(None).with_fragment(None) #error url
         return new_url, err_url
 
     async def process_link(self, url, level, check_host=False):
