@@ -35,6 +35,7 @@ class Cloner(object):
 
     @staticmethod
     def add_scheme(url):
+        # Adding scheme as per wish to error and main url
         new_url = yarl.URL(url)
         if not new_url.scheme:
             new_url = yarl.URL('http://' + url)   # 
@@ -42,6 +43,7 @@ class Cloner(object):
         return new_url, err_url
 
     async def process_link(self, url, level, check_host=False):
+        # return: HUmanReadable_Url
         try:
             url = yarl.URL(url)
         except UnicodeError:
@@ -54,7 +56,7 @@ class Cloner(object):
             else:
                 url = self.moved_root.join(url)
 
-        host = url.host
+        host = url.host    # main (www.python.org)
 
         if check_host:
             if (host != self.root.host and self.moved_root is None) or \
@@ -72,6 +74,7 @@ class Cloner(object):
         return res
 
     async def replace_links(self, data, level):
+        # return: 
         soup = BeautifulSoup(data, 'html.parser')
 
         # find all relative links
@@ -120,7 +123,9 @@ class Cloner(object):
         return file_name, hash_name
 
     async def get_body(self, session):
-
+        '''
+        return: 
+        '''
         while not self.new_urls.empty():
             print(animation[self.itr % len(animation)], end="\r")
             self.itr = self.itr + 1
@@ -175,11 +180,11 @@ class Cloner(object):
 
     async def run(self):
         '''
-        dumping json files to run
+        dump meta file
         '''
         session = aiohttp.ClientSession()
         try:
-            await self.new_urls.put((self.root, 0))
+            await self.new_urls.new_urls.put((self.root, 0))
             await self.new_urls.put((self.error_page, 0))
             await self.get_body(session)
         except KeyboardInterrupt:
