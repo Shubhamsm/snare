@@ -37,7 +37,7 @@ class Cloner(object):
     def add_scheme(url):
         new_url = yarl.URL(url)
         if not new_url.scheme:
-            new_url = yarl.URL('http://' + url)
+            new_url = yarl.URL('http://' + url)   # 
         err_url = new_url.with_path('/status_404').with_query(None).with_fragment(None) #error url
         return new_url, err_url
 
@@ -100,6 +100,7 @@ class Cloner(object):
         return soup
 
     def _make_filename(self, url):
+        '''making file name in Hash'''
         host = url.host
         if url.is_absolute():
             file_name = url.relative().human_repr()
@@ -119,6 +120,7 @@ class Cloner(object):
         return file_name, hash_name
 
     async def get_body(self, session):
+
         while not self.new_urls.empty():
             print(animation[self.itr % len(animation)], end="\r")
             self.itr = self.itr + 1
@@ -172,6 +174,9 @@ class Cloner(object):
             exit(-1)
 
     async def run(self):
+        '''
+        dumping json files to run
+        '''
         session = aiohttp.ClientSession()
         try:
             await self.new_urls.put((self.root, 0))
