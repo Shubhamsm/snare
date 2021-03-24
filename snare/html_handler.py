@@ -16,7 +16,7 @@ class HtmlHandler():
     async def get_dorks(self):
         dorks = None
         try:
-            async with aiohttp.ClientSession() as session:
+            async with aiohttp.ClientSession() as session:   # open a  aiohttp sessions
                 r = await session.get(
                     'http://{0}:8090/dorks'.format(self.tanner), timeout=10.0
                 )
